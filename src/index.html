@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon.png"
+    />
+    <link href="./output.css" rel="stylesheet" />
+    <script src="./script.js" defer></script>
+    <title>Aliyaser-Mousavi | Browser extensions manager UI</title>
+    <style>
+      .scale-0 {
+        transform: scale(0);
+      }
+      .scale-100 {
+        transform: scale(1);
+      }
+      #hover-bg {
+        will-change: transform;
+      }
+      .ripple-bg {
+        will-change: transform;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen bg-linear-to-br from-[#ECF3FD] to-[#EFFBFB] dark:from-[#060B1D] dark:to-[#0A1640]"
+  >
+    <header class="px-4 mx-auto max-w-7xl lg:px-8 md:px-6 sm:px-5">
+      <div
+        class="bg-white dark:bg-[#1F2535] flex items-center justify-between mt-8 py-2 px-3 rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700"
+      >
+        <div>
+          <img
+            src="./assets/images/logo.svg"
+            alt="Website logo"
+            class="block dark:hidden max-w-[179px] h-[41px]"
+          />
+          <img
+            src="./assets/images/logo.png"
+            alt="Website logo"
+            class="hidden dark:block max-w-[179px] h-[41px]"
+          />
+        </div>
+        <div
+          id="btn"
+          class="relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-gray-200/80 dark:bg-gray-400 p-2.5 cursor-pointer group"
+        >
+          <span
+            id="hover-bg"
+            class="absolute inset-0 transition-transform duration-500 scale-0 bg-gray-400 cursor-pointer pointer-events-none dark:bg-gray-600 rounded-xl"
+          ></span>
+          <button
+            id="theme-toggle"
+            class="relative z-10 flex items-center justify-center w-8 cursor-pointer 8"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              id="theme-toggle-light-icon"
+              class="transition-colors duration-500 cursor-pointer group-hover:text-white dark:hidden"
+            >
+              <path
+                d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
+              />
+            </svg>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              id="theme-toggle-dark-icon"
+              class="hidden transition-colors duration-500 cursor-pointer group-hover:text-white dark:block"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <section
+      class="px-4 pt-4 mx-auto max-w-7xl lg:px-8 md:px-6 sm:px-5 lg:pt-8 md:pt-6"
+    >
+      <div
+        class="flex flex-col items-center justify-between gap-4 sm:flex-row md:gap-6"
+      >
+        <div class="text-center sm:text-left">
+          <h1
+            class="text-[#091544] dark:text-white font-bold lg:text-3xl md:text-2xl text-xl"
+          >
+            Extensions List
+          </h1>
+        </div>
+        <div
+          class="flex flex-wrap items-center justify-center gap-2 md:justify-end"
+        >
+          <div
+            class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-3 py-1.5 cursor-pointer dark:bg-[#2F364B] group"
+          >
+            <span
+              class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+            ></span>
+            <a
+              id="filter-all"
+              href="#"
+              class="relative z-10 text-[#091544] dark:text-white dark:group-hover:text-[#091544] font-medium group-hover:text-white transition-colors"
+              >All</a
+            >
+          </div>
+          <div
+            class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-3 py-1.5 cursor-pointer dark:bg-[#2F364B] group"
+          >
+            <span
+              class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+            ></span>
+            <a
+              id="filter-active"
+              href="#"
+              class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors"
+              >Active</a
+            >
+          </div>
+          <div
+            class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-3 py-1.5 cursor-pointer dark:bg-[#2F364B] group"
+          >
+            <span
+              class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+            ></span>
+            <a
+              id="filter-inactive"
+              href="#"
+              class="relative z-10 text-[#091544] dark:text-white dark:group-hover:text-[#091544] font-medium group-hover:text-white transition-colors"
+              >Inactive</a
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid justify-between grid-cols-1 gap-4 py-7 lg:grid-cols-3 sm:grid-cols-2"
+      >
+        <div
+          data-id="1"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#C0D9BE] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-layout-grid-icon lucide-layout-grid"
+              >
+                <rect width="7" height="7" x="3" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="14" rx="1" />
+                <rect width="7" height="7" x="3" y="14" rx="1" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                DevLens
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Quickly inspect page layouts and visualize element boundaries.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="2"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#A6D7E6] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-code-xml-icon lucide-code-xml"
+              >
+                <path d="m18 16 4-4-4-4" />
+                <path d="m6 8-4 4 4 4" />
+                <path d="m14.5 4-5 16" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                StyleSpy
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Instantly analyze and copy CSS from any webpage element.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="3"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#FACFD2] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-zap-icon lucide-zap"
+              >
+                <path
+                  d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+                />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                SpeedBoost
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Optimizes browser resource usage to accelerate page loading.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="4"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#F1C0E9] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-braces-icon lucide-braces"
+              >
+                <path
+                  d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"
+                />
+                <path
+                  d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"
+                />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                JSONWizard
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Formats, validates, and prettifies JSON responses in-browser.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="5"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#CFB9F1] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-layout-panel-top-icon lucide-layout-panel-top"
+              >
+                <rect width="18" height="7" x="3" y="3" rx="1" />
+                <rect width="7" height="7" x="3" y="14" rx="1" />
+                <rect width="7" height="7" x="14" y="14" rx="1" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                TabMaster Pro
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Organizes browser tabs into groups and sessions for easy access.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="6"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#A4C4F3] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-monitor-icon lucide-monitor"
+              >
+                <rect width="20" height="14" x="2" y="3" rx="2" />
+                <line x1="8" x2="16" y1="21" y2="21" />
+                <line x1="12" x2="12" y1="17" y2="21" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                ViewportBuddy
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Simulates various screen resolutions directly within the
+                browser.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="7"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#91DAF3] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-sticky-note-icon lucide-sticky-note"
+              >
+                <path
+                  d="M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8Z"
+                />
+                <path d="M15 3v4a2 2 0 0 0 2 2h4" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                Markup Notes
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Enables annotation and notes directly onto webpages for
+                collaborative debugging.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="8"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#B8B8FE] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-grid3x3-icon lucide-grid-3x3"
+              >
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+                <path d="M3 9h18" />
+                <path d="M3 15h18" />
+                <path d="M9 3v18" />
+                <path d="M15 3v18" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                GridGuides
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Overlay customizable grids and alignment guides on any webpage.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="9"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#98F5E2] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-palette-icon lucide-palette"
+              >
+                <path
+                  d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"
+                />
+                <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+                <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+                <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+                <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                Palette Picker
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Instantly extracts color palettes from any webpage.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="10"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#FCD8BE] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-link2-icon lucide-link-2"
+              >
+                <path d="M9 17H7A5 5 0 0 1 7 7h2" />
+                <path d="M15 7h2a5 5 0 1 1 0 10h-2" />
+                <line x1="8" x2="16" y1="12" y2="12" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                LinkChecker
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Scans and highlights broken links on any page you visit.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="11"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#8EECF3] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-camera-icon lucide-camera"
+              >
+                <path
+                  d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"
+                />
+                <circle cx="12" cy="13" r="3" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                DOM Snapshot
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Capture and export DOM structures quickly for analysis or
+                sharing.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          data-id="12"
+          class="bg-white dark:bg-[#1F2535] rounded-2xl shadow-md shadow-gray-200 dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 extension-card"
+        >
+          <div class="flex items-start gap-4 p-4">
+            <div class="bg-[#B6F8C1] p-2.5 rounded-xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-terminal-icon lucide-terminal"
+              >
+                <path d="M12 19h8" />
+                <path d="m4 17 6-6-6-6" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-[#091544] dark:text-white font-bold text-xl">
+                ConsolePlus
+              </h2>
+              <p class="pt-1 text-sm text-gray-500">
+                Enhanced developer console with advanced filtering and logging
+                features.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-end justify-between p-4">
+            <div>
+              <div
+                class="ripple-btn relative inline-flex items-center justify-center overflow-hidden rounded-full border border-gray-200 dark:border-gray-700 dark:hover:border-gray-900 bg-white px-2 py-1 cursor-pointer dark:bg-[#2F364B] group"
+              >
+                <span
+                  class="absolute inset-0 transition-transform duration-500 scale-0 bg-[#C7291A] rounded-full"
+                ></span>
+                <a
+                  href="#"
+                  class="relative z-10 text-[#091544] dark:text-white font-medium dark:group-hover:text-[#091544] group-hover:text-white transition-colors remove-btn"
+                  >Remove</a
+                >
+              </div>
+            </div>
+            <div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" />
+                <div
+                  class="w-10 h-5 transition-colors duration-300 bg-gray-300 rounded-full peer peer-checked:bg-red-600"
+                ></div>
+                <div
+                  class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
