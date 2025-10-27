@@ -112,12 +112,25 @@ function initRemoveButtons() {
       e.preventDefault();
       const card = btn.closest(".extension-card");
       const id = card.dataset.id;
-      const removed = JSON.parse(localStorage.getItem("removedCards")) || [];
-      if (!removed.includes(id)) removed.push(id);
-      localStorage.setItem("removedCards", JSON.stringify(removed));
-
-      card.remove();
-      saveCardsData();
+      const confirmDelete = confirm(
+        "Are you sure you want to remove this extension?"
+      );
+      if (confirmDelete) {
+        const removed = JSON.parse(localStorage.getItem("removedCards")) || [];
+        if (!removed.includes(id)) removed.push(id);
+        localStorage.setItem("removedCards", JSON.stringify(removed));
+        card.classList.add("removing");
+        card.addEventListener(
+          "animationend",
+          () => {
+            card.remove();
+            saveCardsData();
+          },
+          { once: true }
+        );
+      } else {
+        return;
+      }
     });
   });
 }
